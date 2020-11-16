@@ -531,9 +531,10 @@ class MainMessage extends ComplexMessage {
   /// Generate code for this message, expecting it to be part of a map
   /// keyed by name with values the function that calls Intl.message.
   String toCodeForLocale(String locale, String name) {
+    final annotatedArguments = arguments.map((e) => 'dynamic $e');
     var out = new StringBuffer()
       ..write('static String $name(')
-      ..write(arguments.join(", "))
+      ..write(annotatedArguments.join(", "))
       ..write(') => "')
       ..write(translations[locale])
       ..write('";');
