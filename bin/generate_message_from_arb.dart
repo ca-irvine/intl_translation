@@ -25,6 +25,8 @@ main(List<String> args) {
     help: '',
   );
 
+  parser.parse(args);
+
   if ((translationFile ?? '').isEmpty) {
     print('翻訳ファイルを指定してください。');
     print(parser.usage);
