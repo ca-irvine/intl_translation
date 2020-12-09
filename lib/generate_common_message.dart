@@ -5,20 +5,20 @@ class CommonMessageGeneration {
     var output = StringBuffer();
 
     output.write('''
-    import 'dart:ui';
+import 'dart:ui';
 
-    import 'package:intl/intl.dart';
-    
-    class Message {
-        const Message._(this.locale);
+import 'package:intl/intl.dart';
 
-        factory Message.of(Locale locale) {
-          return Message._(locale);
-        }
-      
-        final Locale locale;
-        
-    ''');
+class Message {
+  const Message._(this.locale);
+
+  factory Message.of(Locale locale) {
+    return Message._(locale);
+  }
+
+  final Locale locale;
+
+''');
 
     messages.forEach((element) {
       output.write(element.toCode());
@@ -51,27 +51,27 @@ class Message {
     final matches = exp.allMatches(content);
     if (matches.isEmpty) {
       return '''
-        String get $id {
-          return Intl.message(
-            "$content",
-            name: "$id",
-          );
-        }
-    ''';
+  String get $id {
+    return Intl.message(
+      "$content",
+      name: "$id",
+    );
+  }
+''';
     }
 
     final arguments = matches.map((e) => e.group(1));
     final argumentsWithType = arguments.map((e) => 'dynamic $e').join(',');
 
     return '''
-    String $id($argumentsWithType) {
-      return Intl.message(
-        "$content",
-        name: "$id",
-        args: [${arguments.join(',')}],
-      );
-    }
-    ''';
+  String $id($argumentsWithType) {
+    return Intl.message(
+      "$content",
+      name: "$id",
+      args: [${arguments.join(',')}],
+    );
+  }
+''';
   }
 }
 
