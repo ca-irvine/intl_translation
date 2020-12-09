@@ -35,10 +35,10 @@ main(List<String> args) {
 
   final file = File(translationFile);
   final src = file.readAsStringSync();
-  final Map<String, String> json = jsonDecoder.decode(src);
-  final messages = json.entries.where((element) => element.key.startsWith("@")).map((entry) {
-    return Message(id: entry.key, content: entry.value);
-  });
+  final Map<String, dynamic> json = jsonDecoder.decode(src);
+  final messages = json.entries.where((element) => !element.key.startsWith("@")).map((entry) {
+    return Message(id: entry.key, content: entry.value.toString());
+  }).toList();
 
   final generation = CommonMessageGeneration();
   String generated = generation.generate(messages);

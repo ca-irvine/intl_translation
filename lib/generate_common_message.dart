@@ -18,7 +18,6 @@ class CommonMessageGeneration {
       
         final Locale locale;
         
-    }
     ''');
 
     messages.forEach((element) {
@@ -39,38 +38,61 @@ enum MessageType {
 
 class Message {
   Message({
-    this.id,
-    this.content,
-  });
+    String id,
+    String content,
+  })  : id = id.replaceAll("@", ""),
+        content = content.escapeAndValidateString();
 
   final String id;
   final String content;
 
   String toCode() {
-    final exp = RegExp('^.+\{(.+)\}');
+    final exp = RegExp('^.+\{([a-z].+)\}');
     final matches = exp.allMatches(content);
     if (matches.isEmpty) {
       return '''
         String get $id {
           return Intl.message(
-            '$content',
-            name: '$id',
+            "$content",
+            name: "$id",
           );
         }
     ''';
     }
 
-    final arguments = matches.map((e) => e.group(0));
+    final arguments = matches.map((e) => e.group(1));
     final argumentsWithType = arguments.map((e) => 'dynamic $e').join(',');
 
     return '''
     String $id($argumentsWithType) {
-      Intl.message(
-        '$content',
-        name: '$id',
+      return Intl.message(
+        "$content",
+        name: "$id",
         args: [${arguments.join(',')}],
       );
     }
     ''';
+  }
+}
+
+extension StringExt on String {
+  String escapeAndValidateString() {
+    const Map<String, String> escapes = const {
+      r"\": r"\\",
+      '"': r'\"',
+      "\b": r"\b",
+      "\f": r"\f",
+      "\n": r"\n",
+      "\r": r"\r",
+      "\t": r"\t",
+      "\v": r"\v",
+      "'": r"\'",
+      r"$": r"\$",
+    };
+
+    String _escape(String s) => escapes[s] ?? s;
+
+    var escaped = this.splitMapJoin("", onNonMatch: _escape);
+    return escaped;
   }
 }
