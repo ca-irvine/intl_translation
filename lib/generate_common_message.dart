@@ -2,7 +2,7 @@ library generate_common_message;
 
 class CommonMessageGeneration {
   String generate(List<Message> messages) {
-    var output = StringBuffer();
+    final output = StringBuffer();
 
     output.write('''
 import 'dart:ui';
@@ -92,7 +92,6 @@ extension StringExt on String {
 
     String _escape(String s) => escapes[s] ?? s;
 
-    var escaped = this.splitMapJoin("", onNonMatch: _escape);
-    return escaped;
+    return this.splitMapJoin("", onNonMatch: _escape);
   }
 }

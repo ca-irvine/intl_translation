@@ -9,7 +9,7 @@ import 'package:intl_translation/generate_common_message.dart';
 const jsonDecoder = const JsonCodec();
 
 main(List<String> args) {
-  var parser = new ArgParser();
+  final parser = ArgParser();
   String translationFile;
   String outputPath;
 
@@ -44,7 +44,7 @@ main(List<String> args) {
   }).toList();
 
   final generation = CommonMessageGeneration();
-  String generated = generation.generate(messages);
+  final generated = generation.generate(messages);
 
   File(outputPath).writeAsStringSync(generated);
 }
