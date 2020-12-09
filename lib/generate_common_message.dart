@@ -53,7 +53,7 @@ class Message {
       return '''
   String get $id {
     return Intl.message(
-      "$content",
+      null,
       name: "$id",
     );
   }
@@ -66,7 +66,7 @@ class Message {
     return '''
   String $id($argumentsWithType) {
     return Intl.message(
-      "$content",
+      null,
       name: "$id",
       args: [${arguments.join(',')}],
     );
