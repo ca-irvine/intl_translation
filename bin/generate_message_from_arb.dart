@@ -27,8 +27,11 @@ main(List<String> args) {
 
   parser.parse(args);
 
+  translationFile = args.firstWhere((element) => element.endsWith("arb"), orElse: () => null);
+
   if ((translationFile ?? '').isEmpty) {
-    print('翻訳ファイルを指定してください。');
+    print('Usage: generate_message_from_arb [options]'
+        ' path/to/translation_file.arb');
     print(parser.usage);
     exit(0);
   }
