@@ -13,16 +13,24 @@ class Message {
 
   String get title {
     return Intl.message(
-      "Title is here(de)",
-      name: "title",
+      'Title is here(de)',
+      name: 'title',
     );
   }
 
   String content(dynamic name) {
     return Intl.message(
-      "Hello, {name} (de)",
-      name: "content",
+      'Hello, {name} (de)',
+      name: 'content',
       args: [name],
+    );
+  }
+
+  String content2(dynamic name, dynamic gender) {
+    return Intl.message(
+      'Hello, {name} {gender}(de)',
+      name: 'content2',
+      args: [name, gender],
     );
   }
 

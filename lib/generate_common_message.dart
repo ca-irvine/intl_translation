@@ -69,7 +69,7 @@ class Message {
   String toCode({
     MessageTextType messageTextType = MessageTextType.none,
   }) {
-    final exp = RegExp('^.+\{([a-z].+)\}');
+    final exp = RegExp('\{([a-zA-Z]+)\}');
     final matches = exp.allMatches(content);
 
     String messageText;
@@ -78,7 +78,7 @@ class Message {
         messageText = 'null';
         break;
       case MessageTextType.same:
-        messageText = '"$content"';
+        messageText = '\'$content\'';
         break;
     }
 
@@ -87,21 +87,21 @@ class Message {
   String get $id {
     return Intl.message(
       $messageText,
-      name: "$id",
+      name: '$id',
     );
   }
 ''';
     }
 
-    final arguments = matches.map((e) => e.group(1));
-    final argumentsWithType = arguments.map((e) => 'dynamic $e').join(',');
+    final arguments = matches.map((e) => e.group(0).replaceAll('{', '').replaceAll('}', ''));
+    final argumentsWithType = arguments.map((e) => 'dynamic $e').join(', ');
 
     return '''
   String $id($argumentsWithType) {
     return Intl.message(
       $messageText,
-      name: "$id",
-      args: [${arguments.join(',')}],
+      name: '$id',
+      args: [${arguments.join(', ')}],
     );
   }
 ''';
