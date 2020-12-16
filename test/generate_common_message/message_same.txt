@@ -1,25 +1,15 @@
 import 'dart:ui';
 
-import 'package:domain/domain.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:intl/intl.dart';
 
 class Message {
-  const Message._(this.locale, this.datePickerLocale);
+  const Message._(this.locale);
 
   factory Message.of(Locale locale) {
-    switch (SupportedLanguage.fromString(locale.languageCode)) {
-      case SupportedLanguage.ja:
-        return Message._(locale, DateTimePickerLocale.jp);
-      case SupportedLanguage.en:
-        return Message._(locale, DateTimePickerLocale.en_us);
-    }
-
-    throw FallThroughError();
+    return Message._(locale);
   }
 
   final Locale locale;
-  final DateTimePickerLocale datePickerLocale;
 
   String get title {
     return Intl.message(
