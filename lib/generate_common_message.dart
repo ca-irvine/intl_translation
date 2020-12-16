@@ -88,7 +88,7 @@ class Message {
         messageText = 'null';
         break;
       case MessageTextType.same:
-        messageText = '"$content"';
+        messageText = '\'$content\'';
         break;
     }
 
@@ -97,7 +97,7 @@ class Message {
   String get $id {
     return Intl.message(
       $messageText,
-      name: "$id",
+      name: '$id',
     );
   }
 ''';
@@ -110,7 +110,7 @@ class Message {
   String $id($argumentsWithType) {
     return Intl.message(
       $messageText,
-      name: "$id",
+      name: '$id',
       args: [${arguments.join(', ')}],
     );
   }

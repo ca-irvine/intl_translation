@@ -24,14 +24,14 @@ class Message {
   String get title {
     return Intl.message(
       null,
-      name: "title",
+      name: 'title',
     );
   }
 
   String content(dynamic name) {
     return Intl.message(
       null,
-      name: "content",
+      name: 'content',
       args: [name],
     );
   }
@@ -39,7 +39,7 @@ class Message {
   String content2(dynamic name, dynamic gender) {
     return Intl.message(
       null,
-      name: "content2",
+      name: 'content2',
       args: [name, gender],
     );
   }
