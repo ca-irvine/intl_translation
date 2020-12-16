@@ -10,12 +10,12 @@ main() {
 
   final inputs = [
     Input(
-      'コード生成テスト (none)',
+      'Code generation(none)',
       'test/generate_common_message/message_none.txt',
       MessageTextType.none,
     ),
     Input(
-      'コード生成テスト (same)',
+      'Code generation(same)',
       'test/generate_common_message/message_same.txt',
       MessageTextType.same,
     ),
