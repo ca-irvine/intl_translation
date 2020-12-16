@@ -15,7 +15,7 @@ main(List<String> args) {
   String messageText;
 
   parser.addOption(
-    'translation_file',
+    'translation-file',
     callback: (value) => translationFile = value,
     help: '',
   );
