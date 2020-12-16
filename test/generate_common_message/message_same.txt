@@ -36,4 +36,12 @@ class Message {
     );
   }
 
+  String content2(dynamic name, dynamic gender) {
+    return Intl.message(
+      "Hello, {name} {gender}(de)",
+      name: "content2",
+      args: [name, gender],
+    );
+  }
+
 }
