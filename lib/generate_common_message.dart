@@ -1,7 +1,27 @@
 library generate_common_message;
 
+enum MessageTextType {
+  none,
+  same,
+}
+
+extension MessageTextTypeExt on MessageTextType {
+  static MessageTextType fromString(String str) {
+    switch (str.toLowerCase()) {
+      case 'none':
+        return MessageTextType.none;
+      case 'same':
+        return MessageTextType.same;
+    }
+    throw FallThroughError();
+  }
+}
+
 class CommonMessageGeneration {
-  String generate(List<Message> messages) {
+  String generate(
+    List<Message> messages, {
+    MessageTextType messageTextType = MessageTextType.none,
+  }) {
     final output = StringBuffer();
 
     output.write('''
@@ -21,7 +41,7 @@ class Message {
 ''');
 
     messages.forEach((element) {
-      output.write(element.toCode());
+      output.write(element.toCode(messageTextType: messageTextType));
       output.write("\n");
     });
 
@@ -46,14 +66,27 @@ class Message {
   final String id;
   final String content;
 
-  String toCode() {
+  String toCode({
+    MessageTextType messageTextType = MessageTextType.none,
+  }) {
     final exp = RegExp('^.+\{([a-z].+)\}');
     final matches = exp.allMatches(content);
+
+    String messageText;
+    switch (messageTextType) {
+      case MessageTextType.none:
+        messageText = 'null';
+        break;
+      case MessageTextType.same:
+        messageText = '"$content"';
+        break;
+    }
+
     if (matches.isEmpty) {
       return '''
   String get $id {
     return Intl.message(
-      null,
+      $messageText,
       name: "$id",
     );
   }
@@ -66,7 +99,7 @@ class Message {
     return '''
   String $id($argumentsWithType) {
     return Intl.message(
-      null,
+      $messageText,
       name: "$id",
       args: [${arguments.join(',')}],
     );

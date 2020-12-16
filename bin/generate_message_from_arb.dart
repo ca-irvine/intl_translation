@@ -12,6 +12,7 @@ main(List<String> args) {
   final parser = ArgParser();
   String translationFile;
   String outputPath;
+  String messageText;
 
   parser.addOption(
     'translation_file',
@@ -24,7 +25,12 @@ main(List<String> args) {
     callback: (x) => outputPath = x,
     help: '',
   );
-
+  parser.addOption(
+    'message-text',
+    defaultsTo: 'none',
+    callback: (x) => messageText = x,
+    help: '',
+  );
   parser.parse(args);
 
   translationFile = args.firstWhere((element) => element.endsWith("arb"), orElse: () => null);
@@ -43,8 +49,13 @@ main(List<String> args) {
     return Message(id: entry.key, content: entry.value.toString());
   }).toList();
 
+  final messageTextType = MessageTextTypeExt.fromString(messageText);
+
   final generation = CommonMessageGeneration();
-  final generated = generation.generate(messages);
+  final generated = generation.generate(
+    messages,
+    messageTextType: messageTextType,
+  );
 
   File(outputPath).writeAsStringSync(generated);
 }
