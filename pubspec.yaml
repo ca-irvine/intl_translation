@@ -10,11 +10,13 @@ homepage: https://github.com/dart-lang/intl_translation
 environment:
   sdk: '>=2.7.0 <3.0.0'
 
+dependency_overrides:
+  intl: ^0.16.0
+
 dependencies:
   analyzer: '>=0.39.12'
   args: '>=0.12.1 <2.0.0'
   dart_style: ^1.0.0
-  intl: '>=0.15.3'
   path: '>=0.9.0 <2.0.0'
   petitparser: ^3.0.0
 dev_dependencies:
